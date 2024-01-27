@@ -1,6 +1,7 @@
 import mediapipe as mp
 from .resizeFrame import resizeFrame
 from .colorConverters import convertToBGR, convertToRGB
+from theme.theme import pointColor, lineColor
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -35,7 +36,15 @@ def processImage(frame, instance):
     except:
       pass
     
+
     # Renders pose landmarks on the image
-    mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS, mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2))
+    mp_drawing.draw_landmarks(
+    image, 
+    results.pose_landmarks, 
+    mp_pose.POSE_CONNECTIONS, 
+    mp_drawing.DrawingSpec(color=pointColor, thickness=2, circle_radius=2),  # Adjust the color and circle_radius for landmarks
+    mp_drawing.DrawingSpec(color=lineColor, thickness=2, circle_radius=2)   # Adjust the color and circle_radius for connections
+    )
+
 
     return image
