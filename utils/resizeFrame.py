@@ -1,7 +1,18 @@
 import cv2 as cv
 
-#Resizes the input frame while maintaining its aspect ratio to fit within a target width and height.
 def resizeFrame(frame, target_width = 300, target_height = 700):
+  """
+  Resizes the input frame while maintaining its aspect ratio to fit within
+  a target width and height.
+
+  Parameters:
+  - frame (numpy.ndarray): The input frame (image) to be resized.
+  - target_width (int, optional): The target width for resizing. Default is 300.
+  - target_height (int, optional): The target height for resizing. Default is 700.
+
+  Returns:
+  - numpy.ndarray: The resized frame.
+  """
 
   # Original width, height and aspect ratio
   original_width = frame.shape[1]
