@@ -7,7 +7,7 @@
 - [📝 | Table of Contents](#--table-of-contents)
 - [🧰 | Languages \& Tools ](#--languages--tools-)
 - [🏁 | Getting Started ](#--getting-started-)
-- [🫂| Credits and Acknowledgments ](#-credits-and-acknowledgments-)
+- [🫂 | Credits and Acknowledgments ](#--credits-and-acknowledgments-)
 - [⚖ | License ](#--license-)
 
 
@@ -45,7 +45,7 @@ mediapipe == 0.10.9
 4. Configure the ```video_path``` variable in the ```main.py``` file to the path of the video you want to use. (Use ```0``` if you want to use your webcam)
 5. Run the ```main.py``` file
 
-## 🫂| Credits and Acknowledgments <a name="credits"></a>
+## 🫂 | Credits and Acknowledgments <a name="credits"></a>
 
 The video included in the repository is a sample video, which you can use to test the application. The video was taken from [here](https://www.youtube.com/watch?v=124EvTRSLo8).
 
