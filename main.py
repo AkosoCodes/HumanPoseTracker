@@ -1,7 +1,7 @@
 import cv2 as cv
 import mediapipe as mp
-from utils.processFrame import processFrame
-from utils.renderInformation import printStats
+from utils.frame.processFrame import processFrame
+from utils.information.renderInformation import printStats
 
 # Video source (0 for webcam  or path to video file)
 video_path = 0 # "assets/video.mp4"
