@@ -6,6 +6,7 @@ from .colorConverters import convertToBGR, convertToRGB
 from theme.theme import *
 from .calculateAngle import calculate_angle
 from .renderStatusBox import renderStatusBox
+from .processLandmarks import *
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -39,26 +40,13 @@ def processImage(frame, instance, counter, stage):
       landmarks = results.pose_landmarks.landmark
 
       # Gets the landmarks for the left hip, knee, and heel
-      hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x, landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
-      knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x, landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
-      heel = [landmarks[mp_pose.PoseLandmark.LEFT_HEEL.value].x, landmarks[mp_pose.PoseLandmark.LEFT_HEEL.value].y]
+      hip, knee, heel = extractLandmarks(results, mp_pose)
 
       # Calculates the angle between the hip, knee, and heel
       angle = calculate_angle(hip, knee, heel)
 
       # Increments the counter if the person does a squat
-      if angle > 165 and stage == "raising":
-          stage = "top"
-          counter += 1
-          print("At the Top.")
-      if angle < 165 and angle > 60:
-          if stage == "top":
-              stage = "lowering"
-          elif stage == "bottom":
-              stage = "raising"
-      if angle < 60 and stage == "lowering":
-          stage = "bottom"
-          print("At the bottom.")
+      stage, counter = processAngle(stage, counter, angle)
 
     except Exception as e:
         print(f"Error processing frame: {e}")
