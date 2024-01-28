@@ -4,7 +4,7 @@ import numpy as np
 from .resizeFrame import resizeFrame
 from .colorConverters import convertToBGR, convertToRGB
 from theme.theme import *
-from .calculateAngle import calculate_angle
+from .processAngles import *
 from .renderStatusBox import renderStatusBox
 from .processLandmarks import *
 
@@ -12,8 +12,7 @@ mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
 
-
-def processFrame(frame, instance, counter, stage, lowest_angle, highest_angle):
+def processFrame(frame, instance, counter, stage, tilt, lowest_angle, highest_angle):
     """
     Processes an input frame by resizing, recoloring, and applying pose detection.
 
@@ -42,26 +41,32 @@ def processFrame(frame, instance, counter, stage, lowest_angle, highest_angle):
       landmarks = results.pose_landmarks.landmark
 
       # Gets the landmarks for the left hip, knee, and heel
-      hip, knee, heel = extractLandmarks(results, mp_pose)
+      depthLandmarks, tiltLandmarks = extractLandmarks(results, mp_pose)
 
       # Calculates the angle between the hip, knee, and heel
-      angle = calculate_angle(hip, knee, heel)
+      depthAngle = calculate_angle(depthLandmarks)
+
+      # Calculates the vertical distance between the left and right shoulder
+      tiltAngle = round(tiltLandmarks[0] - tiltLandmarks[1], 3)
 
       # Updates the lowest and highest angles
-      if angle < lowest_angle:
-        lowest_angle = angle
-      if angle > highest_angle:
-        highest_angle = angle
+      if depthAngle < lowest_angle:
+        lowest_angle = depthAngle
+      if depthAngle > highest_angle:
+        highest_angle = depthAngle
 
-      # Increments the counter if the person does a repetition
-      stage, counter = processAngle(stage, counter, angle)
+      # Processing the depth angle and tilt angles
+      stage, counter = processDepthAngle(stage, counter, depthAngle)
+      tilt = processTiltAngle(tilt, tiltAngle)
 
     except Exception as e:
         print(f"Error processing frame: {e}")
-        angle = 170
+        depthAngle = 170
+        tiltAngle = 0
+        tilt = "NEUTRAL"
 
     # Renders the status box
-    renderStatusBox(image, counter, angle, stage)
+    renderStatusBox(image, counter, depthAngle, tilt, stage)
 
     # Renders pose landmarks on the image
     mp_drawing.draw_landmarks(
@@ -72,4 +77,4 @@ def processFrame(frame, instance, counter, stage, lowest_angle, highest_angle):
     mp_drawing.DrawingSpec(color=lineColor, thickness=2, circle_radius=2)
     )
 
-    return image, counter, stage, [lowest_angle, highest_angle]
+    return image, counter, stage, tilt, [lowest_angle, highest_angle]

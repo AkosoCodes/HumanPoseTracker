@@ -3,7 +3,7 @@ import mediapipe as mp
 from utils.processFrame import processFrame
 
 # Video source (0 for webcam  or path to video file)
-video_path = "assets/calibration4.mp4"
+video_path = "assets/calibration3.mp4"
 
 ## Setup video capture
 capture = cv.VideoCapture(video_path)
@@ -13,6 +13,7 @@ with mp.solutions.pose.Pose(min_detection_confidence=0.45, min_tracking_confiden
 
   stage = 'top'
   counter = 0
+  tilt = "NEUTRAL"
   minAngle = float('inf')
   maxAngle = float('-inf')
   
@@ -25,7 +26,7 @@ with mp.solutions.pose.Pose(min_detection_confidence=0.45, min_tracking_confiden
       break
 
     # Processes the image
-    image, counter, stage, boundary = processFrame(frame, pose, counter, stage, minAngle, maxAngle)
+    image, counter, stage, tilt, boundary = processFrame(frame, pose, counter, stage, tilt, minAngle, maxAngle)
     
     # Keep track of the lowest and highest angles
     if boundary[0] < minAngle:
