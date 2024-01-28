@@ -4,7 +4,7 @@ from utils.processFrame import processFrame
 from utils.renderInformation import printStats
 
 # Video source (0 for webcam  or path to video file)
-video_path = "assets/calibration5.mp4"
+video_path = 0 # "assets/video.mp4"
 
 ## Setup video capture
 capture = cv.VideoCapture(video_path)
