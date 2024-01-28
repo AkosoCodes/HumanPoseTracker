@@ -3,8 +3,8 @@ import mediapipe as mp
 from utils.frame.processFrame import processFrame
 from utils.information.renderInformation import printStats
 
-# Video source (0 for webcam  or path to video file)
-video_path = 0 # "assets/video.mp4"
+# Video source
+video_path = "assets/video.mp4" # (0 for webcam)
 
 ## Setup video capture
 capture = cv.VideoCapture(video_path)
