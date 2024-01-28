@@ -3,13 +3,17 @@ import mediapipe as mp
 from utils.processImage import processImage
 
 # Video source (0 for webcam  or path to video file)
-video_path = 0 # "path/to/video/file.mp4"
+video_path = 0
 
 ## Setup video capture
 capture = cv.VideoCapture(video_path)
 
 ## Setup mediapipe instance
 with mp.solutions.pose.Pose(min_detection_confidence=0.45, min_tracking_confidence=0.45) as pose:
+
+  stage = 'top'
+  counter = 0
+  
   while capture.isOpened():
     success, frame = capture.read()
 
@@ -19,7 +23,7 @@ with mp.solutions.pose.Pose(min_detection_confidence=0.45, min_tracking_confiden
       break
 
     # Processes the image
-    image = processImage(frame, pose)
+    image, counter, stage = processImage(frame, pose, counter, stage)
     
     # Display the resulting frame
     cv.imshow('Mediapipe Feed', image)
