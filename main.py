@@ -1,6 +1,6 @@
 import cv2 as cv
 import mediapipe as mp
-from utils.processImage import processImage
+from utils.processFrame import processFrame
 
 # Video source (0 for webcam  or path to video file)
 video_path = "assets/calibration4.mp4"
@@ -13,6 +13,8 @@ with mp.solutions.pose.Pose(min_detection_confidence=0.45, min_tracking_confiden
 
   stage = 'top'
   counter = 0
+  minAngle = float('inf')
+  maxAngle = float('-inf')
   
   while capture.isOpened():
     success, frame = capture.read()
@@ -23,8 +25,14 @@ with mp.solutions.pose.Pose(min_detection_confidence=0.45, min_tracking_confiden
       break
 
     # Processes the image
-    image, counter, stage = processImage(frame, pose, counter, stage)
+    image, counter, stage, boundary = processFrame(frame, pose, counter, stage, minAngle, maxAngle)
     
+    # Keep track of the lowest and highest angles
+    if boundary[0] < minAngle:
+      minAngle = boundary[0]
+    if boundary[1] > maxAngle:
+      maxAngle = boundary[1]
+
     # Display the resulting frame
     cv.imshow('Mediapipe Feed', image)
     
@@ -32,6 +40,9 @@ with mp.solutions.pose.Pose(min_detection_confidence=0.45, min_tracking_confiden
     if cv.waitKey(10) & 0xFF == ord('q'):
         break
 
+  print('Number of REPS:', counter)
+  print('Lowest angle:', minAngle)
+  print('Highest angle:', maxAngle)
 # Release the capture when done
 capture.release()
 cv.destroyAllWindows()

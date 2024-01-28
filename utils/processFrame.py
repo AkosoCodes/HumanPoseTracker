@@ -11,7 +11,9 @@ from .processLandmarks import *
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
-def processImage(frame, instance, counter, stage):
+
+
+def processFrame(frame, instance, counter, stage, lowest_angle, highest_angle):
     """
     Processes an input frame by resizing, recoloring, and applying pose detection.
 
@@ -45,7 +47,13 @@ def processImage(frame, instance, counter, stage):
       # Calculates the angle between the hip, knee, and heel
       angle = calculate_angle(hip, knee, heel)
 
-      # Increments the counter if the person does a squat
+      # Updates the lowest and highest angles
+      if angle < lowest_angle:
+        lowest_angle = angle
+      if angle > highest_angle:
+        highest_angle = angle
+
+      # Increments the counter if the person does a repetition
       stage, counter = processAngle(stage, counter, angle)
 
     except Exception as e:
@@ -60,9 +68,8 @@ def processImage(frame, instance, counter, stage):
     image, 
     results.pose_landmarks, 
     mp_pose.POSE_CONNECTIONS, 
-    mp_drawing.DrawingSpec(color=pointColor, thickness=2, circle_radius=2),  # Adjust the color and circle_radius for landmarks
-    mp_drawing.DrawingSpec(color=lineColor, thickness=2, circle_radius=2)   # Adjust the color and circle_radius for connections
+    mp_drawing.DrawingSpec(color=pointColor, thickness=2, circle_radius=2),
+    mp_drawing.DrawingSpec(color=lineColor, thickness=2, circle_radius=2)
     )
 
-
-    return image, counter, stage
+    return image, counter, stage, [lowest_angle, highest_angle]
