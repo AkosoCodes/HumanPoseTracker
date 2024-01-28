@@ -9,35 +9,30 @@ def printStats(counter, minAngle, maxAngle):
     print('='*25)
 
 def renderStatusBox(image, counter, depthAngle, tilt, stance, stage):
-    # Draw a semi-transparent background rectangle for better readability
-    cv.rectangle(image, (0, 0), (225, 180), statusBox, -1)
+    # Create a transparent background rectangle for better readability
+    cv.rectangle(image, (0, 0), (280, 165), statusBox, -1)
 
-    # Display "REPS" label
-    cv.putText(image, 'REPS:', (15, 25), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusLabel, 2, cv.LINE_AA)
+    # Set font properties
+    font = cv.FONT_HERSHEY_SIMPLEX
+    fontScale = 0.7
+    fontThickness = 2
 
-    # Display the counter value
-    cv.putText(image, str(counter), (100, 25), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusValue, 2, cv.LINE_AA)
+    # Display "REPS" label and value
+    cv.putText(image, 'REPS:', (15, 30), font, fontScale, statusLabel, fontThickness, cv.LINE_AA)
+    cv.putText(image, str(counter).lower(), (120, 30), font, fontScale, repColor, fontThickness, cv.LINE_AA)
 
-    # Display "ANGLE" label
-    cv.putText(image, 'ANGLE:', (15, 60), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusLabel, 2, cv.LINE_AA)
+    # Display "ANGLE" label and value
+    cv.putText(image, 'ANGLE:', (15, 60), font, fontScale, statusLabel, fontThickness, cv.LINE_AA)
+    cv.putText(image, f'{int(depthAngle)} deg', (120, 60), font, fontScale, statusValue, fontThickness, cv.LINE_AA)
 
-    # Display the angle value
-    cv.putText(image, str(int(depthAngle)), (100, 60), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusValue, 2, cv.LINE_AA)
+    # Display "STAGE" label and value
+    cv.putText(image, 'STAGE:', (15, 90), font, fontScale, statusLabel, fontThickness, cv.LINE_AA)
+    cv.putText(image, str(stage).lower(), (120, 90), font, fontScale,statusValue, fontThickness, cv.LINE_AA)
 
-    # Display the "STAGE" label
-    cv.putText(image, 'STAGE:', (15, 95), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusLabel, 2, cv.LINE_AA)
+    # Display "TILT" label and value
+    cv.putText(image, 'TILT:', (15, 120), font, fontScale, statusLabel, fontThickness, cv.LINE_AA)
+    cv.putText(image, str(tilt).lower(), (120, 120), font, fontScale, statusValue, fontThickness, cv.LINE_AA)
 
-    # Display the stage value
-    cv.putText(image, str(stage), (100, 95), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusValue, 2, cv.LINE_AA)
-
-    # Display the "TILT" label
-    cv.putText(image, 'TILT:', (15, 130), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusLabel, 2, cv.LINE_AA)
-    
-    # Display the tilt value
-    cv.putText(image, str(tilt), (100, 130), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusValue, 2, cv.LINE_AA)
-
-    # Display the "STANCE" label
-    cv.putText(image, 'STANCE:', (15, 165), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusLabel, 2, cv.LINE_AA)
-    
-    # Display the tilt value
-    cv.putText(image, str(stance), (100, 165), cv.FONT_HERSHEY_SIMPLEX, 0.7, statusValue, 2, cv.LINE_AA)
+    # Display "STANCE" label and value
+    cv.putText(image, 'STANCE:', (15, 150), font, fontScale, statusLabel, fontThickness, cv.LINE_AA)
+    cv.putText(image, str(stance).lower(), (120, 150), font, fontScale, statusValue, fontThickness, cv.LINE_AA)
