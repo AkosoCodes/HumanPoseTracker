@@ -12,7 +12,7 @@ mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
 
-def processFrame(frame, instance, counter, stage, tilt, lowest_angle, highest_angle):
+def processFrame(frame, instance, counter, stage, tilt, stance, lowest_angle, highest_angle):
     """
     Processes an input frame by resizing, recoloring, and applying pose detection.
 
@@ -41,13 +41,16 @@ def processFrame(frame, instance, counter, stage, tilt, lowest_angle, highest_an
       landmarks = results.pose_landmarks.landmark
 
       # Gets the landmarks for the left hip, knee, and heel
-      depthLandmarks, tiltLandmarks = extractLandmarks(results, mp_pose)
+      depthLandmarks, tiltLandmarks, stanceLandmarks = extractLandmarks(results, mp_pose)
 
       # Calculates the angle between the hip, knee, and heel
       depthAngle = calculate_angle(depthLandmarks)
 
       # Calculates the vertical distance between the left and right shoulder
       tiltAngle = round(tiltLandmarks[0] - tiltLandmarks[1], 3)
+
+      # Calculates the horizontal distance between the left and right heel
+      stanceDistance = round(stanceLandmarks[0][0] - stanceLandmarks[1][0], 3)
 
       # Updates the lowest and highest angles
       if depthAngle < lowest_angle:
@@ -58,15 +61,17 @@ def processFrame(frame, instance, counter, stage, tilt, lowest_angle, highest_an
       # Processing the depth angle and tilt angles
       stage, counter = processDepthAngle(stage, counter, depthAngle)
       tilt = processTiltAngle(tilt, tiltAngle)
+      stance = processStance(stance, stanceDistance)
 
     except Exception as e:
         print(f"Error processing frame: {e}")
         depthAngle = 170
         tiltAngle = 0
         tilt = "NEUTRAL"
+        stance = "NEUTRAL"
 
     # Renders the status box
-    renderStatusBox(image, counter, depthAngle, tilt, stage)
+    renderStatusBox(image, counter, depthAngle, tilt, stance, stage)
 
     # Renders pose landmarks on the image
     mp_drawing.draw_landmarks(
@@ -77,4 +82,4 @@ def processFrame(frame, instance, counter, stage, tilt, lowest_angle, highest_an
     mp_drawing.DrawingSpec(color=lineColor, thickness=2, circle_radius=2)
     )
 
-    return image, counter, stage, tilt, [lowest_angle, highest_angle]
+    return image, counter, stage, tilt, stance, [lowest_angle, highest_angle]

@@ -11,14 +11,19 @@ def extractLandmarks(results, mp_pose):
     """
     landmarks = results.pose_landmarks.landmark
 
-    hip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x, landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
-    knee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x, landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
-    heel = [landmarks[mp_pose.PoseLandmark.LEFT_HEEL.value].x, landmarks[mp_pose.PoseLandmark.LEFT_HEEL.value].y]
+    leftHip = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x, landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
+    leftKnee = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x, landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+    leftHeel = [landmarks[mp_pose.PoseLandmark.LEFT_HEEL.value].x, landmarks[mp_pose.PoseLandmark.LEFT_HEEL.value].y]
+
+    rightHeel = [landmarks[mp_pose.PoseLandmark.RIGHT_HEEL.value].x, landmarks[mp_pose.PoseLandmark.RIGHT_HEEL.value].y]
 
     leftShoulder = landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value]
     rightShoulder = landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value]
 
-    depthLandmarks = [hip, knee, heel]
-    tiltLandmarks = [leftShoulder.y, rightShoulder.y]
 
-    return depthLandmarks, tiltLandmarks
+
+    depthLandmarks = [leftHip, leftKnee, leftHeel]
+    tiltLandmarks = [rightShoulder.y, leftShoulder.y]
+    stanceLandmarks = [leftHeel, rightHeel]
+
+    return depthLandmarks, tiltLandmarks, stanceLandmarks

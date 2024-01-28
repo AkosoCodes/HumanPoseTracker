@@ -80,3 +80,22 @@ def processDepthAngle(stage, counter, angle):
     if angle < 60 and stage == "lowering":
         stage = "bottom"
     return stage, counter
+
+def processStance(stance, distance):
+    """
+    Processes the distance and updates the stance value based on specific conditions.
+
+    Parameters:
+    - stance (str): Current stance ("wide", "narrow", or "neutral").
+    - distance (float): Current distance between the left and right heels.
+
+    Returns:
+    - str: Updated stance value.
+    """
+    if distance > 0.22:
+        stance = "WIDE"
+    elif distance < 0.1:
+        stance = "NARROW"
+    else:
+        stance = "NEUTRAL"
+    return stance
