@@ -1,6 +1,13 @@
 import cv2 as cv
 from theme.theme import *
 
+def printStats(counter, minAngle, maxAngle):
+    print('='*25)
+    print('|- Number of REPS:', counter)
+    print('|- Lowest angle:', round(minAngle, 2))
+    print('|- Highest angle:', round(maxAngle, 2))
+    print('='*25)
+
 def renderStatusBox(image, counter, depthAngle, tilt, stage):
     # Draw a semi-transparent background rectangle for better readability
     cv.rectangle(image, (0, 0), (225, 145), statusBox, -1)

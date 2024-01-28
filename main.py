@@ -1,6 +1,7 @@
 import cv2 as cv
 import mediapipe as mp
 from utils.processFrame import processFrame
+from utils.renderInformation import printStats
 
 # Video source (0 for webcam  or path to video file)
 video_path = "assets/calibration3.mp4"
@@ -40,10 +41,10 @@ with mp.solutions.pose.Pose(min_detection_confidence=0.45, min_tracking_confiden
     # Press Q on keyboard to exit the program
     if cv.waitKey(10) & 0xFF == ord('q'):
         break
+    
+  # Prints the stats
+  printStats(counter, minAngle, maxAngle)
 
-  print('Number of REPS:', counter)
-  print('Lowest angle:', minAngle)
-  print('Highest angle:', maxAngle)
 # Release the capture when done
 capture.release()
 cv.destroyAllWindows()

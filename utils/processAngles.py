@@ -72,7 +72,6 @@ def processDepthAngle(stage, counter, angle):
     if angle > 165 and stage == "raising":
         stage = "top"
         counter += 1
-        print("At the Top.")
     if 165 > angle > 60:
         if stage == "top":
             stage = "lowering"
@@ -80,5 +79,4 @@ def processDepthAngle(stage, counter, angle):
             stage = "raising"
     if angle < 60 and stage == "lowering":
         stage = "bottom"
-        print("At the bottom.")
     return stage, counter

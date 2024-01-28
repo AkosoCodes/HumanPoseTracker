@@ -2,11 +2,11 @@ import mediapipe as mp
 import cv2 as cv
 import numpy as np
 from .resizeFrame import resizeFrame
-from .colorConverters import convertToBGR, convertToRGB
+from .convertColorFormat import convertToBGR, convertToRGB
 from theme.theme import *
 from .processAngles import *
-from .renderStatusBox import renderStatusBox
-from .processLandmarks import *
+from .renderInformation import renderStatusBox
+from .extractLandmarks import *
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
