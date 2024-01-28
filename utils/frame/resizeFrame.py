@@ -1,6 +1,6 @@
 import cv2 as cv
 
-def resizeFrame(frame, target_width = 800, target_height = 1000):
+def resizeFrame(frame, target_width = 600, target_height = 1000):
   """
   Resizes the input frame while maintaining its aspect ratio to fit within
   a target width and height.
