@@ -1,6 +1,6 @@
 import numpy as np
 
-def calculate_angle(a, b, c):
+def calculate_angle(landmarks):
     """
     Calculate the angle between three points (a, b, c) in a 2D plane.
 
@@ -12,9 +12,11 @@ def calculate_angle(a, b, c):
     Returns:
     - angle (float): The calculated angle in degrees.
     """
-    a = np.array(a)  # Convert to NumPy array for vector operations
-    b = np.array(b)  # Convert to NumPy array for vector operations
-    c = np.array(c)  # Convert to NumPy array for vector operations
+
+    # Convert to NumPy array for vector operations
+    a = np.array(landmarks[0])
+    b = np.array(landmarks[1])
+    c = np.array(landmarks[2])
 
     # Calculate angle using arctan2 and convert to degrees
     radians = np.arctan2(c[1] - b[1], c[0] - b[0]) - np.arctan2(a[1] - b[1], a[0] - b[0])
