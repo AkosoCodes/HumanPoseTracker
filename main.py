@@ -3,7 +3,7 @@ import mediapipe as mp
 from utils.processImage import processImage
 
 # Video source (0 for webcam  or path to video file)
-video_path = 0
+video_path = "assets/calibration4.mp4"
 
 ## Setup video capture
 capture = cv.VideoCapture(video_path)
