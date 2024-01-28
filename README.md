@@ -5,11 +5,25 @@
 
 ## 📝 | Table of Contents
 - [📝 | Table of Contents](#--table-of-contents)
+- [📸 | Demo ](#--demo-)
 - [🧰 | Languages \& Tools ](#--languages--tools-)
 - [🏁 | Getting Started ](#--getting-started-)
 - [🫂 | Credits and Acknowledgments ](#--credits-and-acknowledgments-)
 - [⚖ | License ](#--license-)
 
+
+## 📸 | Demo <a name="demo"></a>
+
+The snippet below shows the application in action. The application tracks the posture of the person in the video, and displays the results in real time. 
+
+It displays the following information:
+- The number of repetitions completed
+- Depth angle of the squat
+- The current stage of the movement
+- The tilt position of the shoulders
+- The stance of the feet
+  
+![Video of Squat](assets/demo.gif)
 
 ## 🧰 | Languages & Tools <a name="languages_tools"></a>
 
