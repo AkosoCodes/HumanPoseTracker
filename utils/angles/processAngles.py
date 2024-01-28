@@ -69,15 +69,19 @@ def processDepthAngle(stage, counter, angle):
     Returns:
     - tuple: Tuple containing the updated stage and counter values.
     """
-    if angle > 165 and stage == "raising":
+
+    upper_angle = 170
+    lower_angle = 100
+
+    if angle > upper_angle and stage == "raising":
         stage = "top"
         counter += 1
-    if 165 > angle > 60:
+    if upper_angle > angle > lower_angle:
         if stage == "top":
             stage = "lowering"
         elif stage == "bottom":
             stage = "raising"
-    if angle < 60 and stage == "lowering":
+    if angle < lower_angle and stage == "lowering":
         stage = "bottom"
     return stage, counter
 
