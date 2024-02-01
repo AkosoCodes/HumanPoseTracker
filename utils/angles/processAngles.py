@@ -1,6 +1,6 @@
 import numpy as np
 
-def calculate_angle(landmarks):
+def calculateAngle(landmarks):
     """
     Calculate the angle between three points (a, b, c) in a 2D plane.
 
@@ -37,10 +37,8 @@ def processTiltAngle(tilt, angle):
     - angle (float): Current angle between the left and right shoulders.
 
     Returns:
-    - str: Updated tilt value.
+    - tilt (str): Updated tilt value.
     """
-    
-    #if positive number, tilt left
     if angle > 0:
         if angle > 0.04:
             tilt = "RIGHT"
@@ -54,10 +52,9 @@ def processTiltAngle(tilt, angle):
     else:
         tilt = "NEUTRAL"
 
-
     return tilt
 
-def processDepthAngle(stage, counter, angle):
+def processDepthAngle(stage, counter, angle, upper_angle = 170, lower_angle = 100):
     """
     Processes the angle and updates the stage and counter based on specific conditions.
 
@@ -65,13 +62,13 @@ def processDepthAngle(stage, counter, angle):
     - stage (str): Current stage ("raising", "lowering", "top", or "bottom").
     - counter (int): Current counter value.
     - angle (float): Current angle between hip, knee, and heel.
+    - upper_angle (float, optional): Upper threshold for the angle. Default is 170.
+    - lower_angle (float, optional): Lower threshold for the angle. Default is 100.
 
     Returns:
-    - tuple: Tuple containing the updated stage and counter values.
+    - stage (str): Updated stage value.
+    - counter (int): Updated counter value.
     """
-
-    upper_angle = 170
-    lower_angle = 100
 
     if angle > upper_angle and stage == "raising":
         stage = "top"
@@ -94,7 +91,7 @@ def processStance(stance, distance):
     - distance (float): Current distance between the left and right heels.
 
     Returns:
-    - str: Updated stance value.
+    - stance (str): Updated stance value.
     """
     if distance > 0.22:
         stance = "WIDE"

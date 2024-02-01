@@ -14,14 +14,25 @@ mp_pose = mp.solutions.pose
 
 def processFrame(frame, instance, counter, stage, tilt, stance, lowest_angle, highest_angle):
     """
-    Processes an input frame by resizing, recoloring, and applying pose detection.
+    Processes the frame (image) and returns the processed frame (image) and updated values.
 
     Parameters:
     - frame (numpy.ndarray): The input frame (image) to be processed.
     - instance: An instance of a MediaPipe pose detection module.
+    - counter (int): The current counter value.
+    - stage (str): The current stage of the squat.
+    - tilt (str): The current tilt of the squat.
+    - stance (str): The current stance of the squat.
+    - lowest_angle (float): The lowest depth angle recorded.
+    - highest_angle (float): The highest depth angle recorded.
 
     Returns:
-    - numpy.ndarray: The processed frame with pose landmarks drawn.
+    - image (numpy.ndarray): The processed frame (image).
+    - counter (int): The updated counter value.
+    - stage (str): The updated stage of the squat.
+    - tilt (str): The updated tilt of the squat.
+    - stance (str): The updated stance of the squat.
+    - [lowest_angle, highest_angle] (list): The updated lowest and highest depth angles recorded.
     """
         
     # Resizes the frame
@@ -44,7 +55,7 @@ def processFrame(frame, instance, counter, stage, tilt, stance, lowest_angle, hi
       depthLandmarks, tiltLandmarks, stanceLandmarks = extractLandmarks(results, mp_pose)
 
       # Calculates the angle between the hip, knee, and heel
-      depthAngle = calculate_angle(depthLandmarks)
+      depthAngle = calculateAngle(depthLandmarks)
 
       # Calculates the vertical distance between the left and right shoulder
       tiltAngle = round(tiltLandmarks[0] - tiltLandmarks[1], 3)

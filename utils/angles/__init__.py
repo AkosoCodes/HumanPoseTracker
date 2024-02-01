@@ -1,8 +1,8 @@
 # utils/angles/__init__.py
-from .processAngles import calculate_angle, processTiltAngle, processDepthAngle, processStance
+from .processAngles import calculateAngle, processTiltAngle, processDepthAngle, processStance
 
 __all__ = [
-    'calculate_angle',
+    'calculateAngle',
     'processTiltAngle',
     'processDepthAngle',
     'processStance',

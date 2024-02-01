@@ -11,7 +11,7 @@ def resizeFrame(frame, target_width = 600, target_height = 1000):
   - target_height (int, optional): The target height for resizing. Default is 700.
 
   Returns:
-  - numpy.ndarray: The resized frame.
+  -- resized_frame (numpy.ndarray): The resized frame (image).
   """
 
   # Original width, height and aspect ratio
